@@ -9,7 +9,7 @@ const AppNavBar = () => {
 	);
 };
 
-const AppTarefaEditar = (props: any) => {
+const AppTarefaAdicionar = (props: any) => {
 	return (
 		<div className="card">
 			<label>Tarefa: </label>
@@ -24,7 +24,7 @@ const AppTarefaLista = (props: any) => {
 		<div className="card">
 			<ul>
 				{props.data.map((item: string, indice: number) => (
-					<li key={indice}>{item}</li>
+					<li key={indice} onClick={props.editar}>{item}</li>
 				))}
 			</ul>
 		</div>
@@ -36,7 +36,7 @@ const App = () => {
 	const tratarMudancaTexto = (e: any) => setTarefa(e.target.value);
 	const [tarefas, setTarefas] = useState([
 		"Prototipar interface do usuário",
-		"Implementar com HTML a interface com o usário em React",
+		"Implementar com HTML a interface com o usuário em React",
 		"Extrair componentes React da implementação HTML",
 		"Transferir os dados do HTML dos componentes React para variáveis",
 		"Modificar os dados de variáveis para estado ou propriedades de componentes",
@@ -44,21 +44,26 @@ const App = () => {
 		"Programar a modificação dos estados",
 	]);
 	const tarefaAdicionar = () => {
-		const lista = tarefas;
-		lista.push(tarefa);
-		setTarefas(lista);
+		const novalista = tarefas;
+		novalista.push(tarefa);
+		setTarefas(novalista);
 		setTarefa("");
 	};
+	const tarefaMudar = (e: any) => {
+		console.log(e.target.textContent);
+		
+		setTarefa(e.target.textContent);
+	}
 
 	return (
 		<>
 			<AppNavBar />
-			<AppTarefaEditar
+			<AppTarefaAdicionar
 				valor={tarefa}
 				mudar={tratarMudancaTexto}
 				adicionar={tarefaAdicionar}
 			/>
-			<AppTarefaLista data={tarefas} />
+			<AppTarefaLista data={tarefas} editar={tarefaMudar} />
 		</>
 	);
 };
